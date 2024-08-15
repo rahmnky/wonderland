@@ -48,3 +48,124 @@
     </script>
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Math Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result, #score, #timer {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        #timer {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        #score {
+            font-weight: bold;
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fun Math Quiz</h1>
+        <p>Solve the following math problem:</p>
+        <div id="question"></div>
+        <input type="text" id="answer" placeholder="Enter your answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <div id="result"></div>
+        <div id="score">Score: 0</div>
+        <div id="timer">Time: 30s</div>
+    </div>
+
+    <script>
+        let num1, num2, correctAnswer;
+        let score = 0;
+        let timeLeft = 30;
+        let timer;
+
+        function generateQuestion() {
+            num1 = Math.floor(Math.random() * 10) + 1;
+            num2 = Math.floor(Math.random() * 10) + 1;
+            correctAnswer = num1 + num2;
+            document.getElementById('question').innerText = `What is ${num1} + ${num2}?`;
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value, 10);
+            const result = document.getElementById('result');
+
+            if (userAnswer === correctAnswer) {
+                result.innerText = 'Correct! 🎉';
+                result.style.color = 'green';
+                score++;
+            } else {
+                result.innerText = `Wrong! The correct answer is ${correctAnswer}.`;
+                result.style.color = 'red';
+            }
+
+            document.getElementById('score').innerText = `Score: ${score}`;
+            generateQuestion();
+            document.getElementById('answer').value = '';
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `Time: ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('result').innerText = `Time's up! Your final score is ${score}.`;
+                    document.getElementById('result').style.color = 'blue';
+                    document.getElementById('question').innerText = '';
+                    document.getElementById('answer').disabled = true;
+                    document.querySelector('button').disabled = true;
+                }
+            }, 1000);
+        }
+
+        // Initialize the quiz
+        generateQuestion();
+        startTimer();
+    </script>
+</body>
+</html>
