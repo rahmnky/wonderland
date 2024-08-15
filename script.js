@@ -18,3 +18,7 @@ function playGame(userChoice) {
 
     document.getElementById('result').textContent = result;
 }
+
+document.getElementById('ksButton').addEventListener('click', function() {
+    alert('ks5tk hameed');
+});
